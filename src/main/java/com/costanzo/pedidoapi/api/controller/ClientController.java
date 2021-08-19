@@ -46,6 +46,7 @@ public class ClientController {
     }
 
     @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         log.info("deleteting client of id: {}", id);
        Client client =  clientService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

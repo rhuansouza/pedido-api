@@ -35,7 +35,7 @@ public class PurchaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody @Valid PurchaseDTO purchaseDTO) {
+    public PurchaseDTO create(@RequestBody @Valid PurchaseDTO purchaseDTO) {
         log.info("creating a purchase");
         Client client = clientService.getById(purchaseDTO.getClient().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Client not found for passed id"));
@@ -47,7 +47,7 @@ public class PurchaseController {
                 .build();
 
         entity = purchaseService.save(entity);
-        return entity.getId();
+        return modelMapper.map(entity, PurchaseDTO.class);//entity.getId();
 
     }
 
